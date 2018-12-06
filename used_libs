@@ -1,0 +1,12 @@
+libasound.so.2
+libc.so.6
+libdl.so.2
+libdlt.so.2
+libgcc_s.so.1
+libias-audio-common.so.4
+libm.so.6
+libpthread.so.0
+librt.so.1
+libstdc++.so.6
+libsystemd.so.0
+libtbb.so.2

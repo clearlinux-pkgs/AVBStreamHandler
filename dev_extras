@@ -1,0 +1,3 @@
+/usr/lib64/ias-audio-common/asound_module_pcm_smartx.cmake
+/usr/lib64/ias-audio-common/asound_module_rate_smartx.cmake
+/usr/lib64/ias-audio-common/ias-audio-common.cmake
