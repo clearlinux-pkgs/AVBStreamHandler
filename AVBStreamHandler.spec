@@ -4,15 +4,16 @@
 #
 Name     : AVBStreamHandler
 Version  : 1.0.3
-Release  : 13
+Release  : 14
 URL      : https://github.com/intel/AVBStreamHandler/releases/download/v1.0.3/AVBStreamHandler-v1.0.3.tar.gz
 Source0  : https://github.com/intel/AVBStreamHandler/releases/download/v1.0.3/AVBStreamHandler-v1.0.3.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : GPL-2.0
+License  : BSD-3-Clause GPL-2.0
 Requires: AVBStreamHandler-bin = %{version}-%{release}
 Requires: AVBStreamHandler-data = %{version}-%{release}
 Requires: AVBStreamHandler-lib = %{version}-%{release}
+Requires: AVBStreamHandler-license = %{version}-%{release}
 BuildRequires : boost-dev
 BuildRequires : buildreq-cmake
 BuildRequires : doxygen
@@ -42,6 +43,7 @@ latencies and sampling events.
 Summary: bin components for the AVBStreamHandler package.
 Group: Binaries
 Requires: AVBStreamHandler-data = %{version}-%{release}
+Requires: AVBStreamHandler-license = %{version}-%{release}
 
 %description bin
 bin components for the AVBStreamHandler package.
@@ -71,9 +73,18 @@ dev components for the AVBStreamHandler package.
 Summary: lib components for the AVBStreamHandler package.
 Group: Libraries
 Requires: AVBStreamHandler-data = %{version}-%{release}
+Requires: AVBStreamHandler-license = %{version}-%{release}
 
 %description lib
 lib components for the AVBStreamHandler package.
+
+
+%package license
+Summary: license components for the AVBStreamHandler package.
+Group: Default
+
+%description license
+license components for the AVBStreamHandler package.
 
 
 %prep
@@ -84,7 +95,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1544074167
+export SOURCE_DATE_EPOCH=1544121071
 mkdir -p clr-build
 pushd clr-build
 %cmake .. -DIAS_IS_HOST_BUILD=1 -DIAS_DISABLE_DOC=1 -DCMAKE_INSTALL_LIBDIR=lib64
@@ -92,8 +103,14 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1544074167
+export SOURCE_DATE_EPOCH=1544121071
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/AVBStreamHandler
+cp LICENSE.txt %{buildroot}/usr/share/package-licenses/AVBStreamHandler/LICENSE.txt
+cp deps/audio/common/LICENSE.txt %{buildroot}/usr/share/package-licenses/AVBStreamHandler/deps_audio_common_LICENSE.txt
+cp deps/igb_avb/kmod/COPYING %{buildroot}/usr/share/package-licenses/AVBStreamHandler/deps_igb_avb_kmod_COPYING
+cp deps/igb_avb/kmod/LICENSE %{buildroot}/usr/share/package-licenses/AVBStreamHandler/deps_igb_avb_kmod_LICENSE
+cp deps/igb_avb/lib/LICENSE %{buildroot}/usr/share/package-licenses/AVBStreamHandler/deps_igb_avb_lib_LICENSE
 pushd clr-build
 %make_install
 popd
@@ -165,3 +182,11 @@ popd
 %exclude /usr/lib64/libias-audio-common.so.4
 %exclude /usr/lib64/libias-audio-common.so.4.0.0
 /usr/lib64/libias-media_transport-avb_streamhandler.so.0.0.1
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/AVBStreamHandler/LICENSE.txt
+/usr/share/package-licenses/AVBStreamHandler/deps_audio_common_LICENSE.txt
+/usr/share/package-licenses/AVBStreamHandler/deps_igb_avb_kmod_COPYING
+/usr/share/package-licenses/AVBStreamHandler/deps_igb_avb_kmod_LICENSE
+/usr/share/package-licenses/AVBStreamHandler/deps_igb_avb_lib_LICENSE
