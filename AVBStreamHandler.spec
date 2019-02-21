@@ -4,7 +4,7 @@
 #
 Name     : AVBStreamHandler
 Version  : 1.0.3
-Release  : 15
+Release  : 16
 URL      : https://github.com/intel/AVBStreamHandler/releases/download/v1.0.3/AVBStreamHandler-v1.0.3.tar.gz
 Source0  : https://github.com/intel/AVBStreamHandler/releases/download/v1.0.3/AVBStreamHandler-v1.0.3.tar.gz
 Summary  : No detailed summary available
@@ -95,7 +95,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1550781544
+export SOURCE_DATE_EPOCH=1550785925
 mkdir -p clr-build
 pushd clr-build
 export LDFLAGS="${LDFLAGS} -fno-lto"
@@ -104,7 +104,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1550781544
+export SOURCE_DATE_EPOCH=1550785925
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/AVBStreamHandler
 cp LICENSE.txt %{buildroot}/usr/share/package-licenses/AVBStreamHandler/LICENSE.txt
@@ -116,6 +116,11 @@ cp private/samples/LICENSE.txt %{buildroot}/usr/share/package-licenses/AVBStream
 pushd clr-build
 %make_install
 popd
+## install_append content
+rm %{buildroot}/usr/lib64/libias-audio-common.so
+rm %{buildroot}/usr/lib64/libias-audio-common.so.4
+rm %{buildroot}/usr/lib64/libias-audio-common.so.4.0.0
+## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -134,7 +139,6 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
-%exclude /usr/lib64/libias-audio-common.so
 /usr/include/audio/common/IasAudioCommonTypes.hpp
 /usr/include/audio/common/audiobuffer/IasMemoryAllocator.hpp
 /usr/include/audio/common/audiobuffer/IasMetaData.hpp
@@ -181,8 +185,6 @@ popd
 %defattr(-,root,root,-)
 %exclude /usr/lib64/alsa-lib/libasound_module_pcm_smartx.so
 %exclude /usr/lib64/alsa-lib/libasound_module_rate_smartx.so
-%exclude /usr/lib64/libias-audio-common.so.4
-%exclude /usr/lib64/libias-audio-common.so.4.0.0
 /usr/lib64/libias-media_transport-avb_streamhandler.so.0.0.1
 
 %files license

@@ -2,8 +2,5 @@
 # names, one per line.
 /usr/share/abi/libias-audio-common.so.4.abi
 /usr/share/alsa/alsa.conf.d/50-smartx.conf
-/usr/lib64/libias-audio-common.so.4
-/usr/lib64/libias-audio-common.so.4.0.0
-/usr/lib64/libias-audio-common.so
 /usr/lib64/alsa-lib/libasound_module_pcm_smartx.so
 /usr/lib64/alsa-lib/libasound_module_rate_smartx.so
