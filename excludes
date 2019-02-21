@@ -1,6 +1,7 @@
 # This file contains the output files that need %exclude. Full path
 # names, one per line.
 /usr/share/abi/libias-audio-common.so.4.abi
+/usr/share/alsa/alsa.conf.d/50-smartx.conf
 /usr/lib64/libias-audio-common.so.4
 /usr/lib64/libias-audio-common.so.4.0.0
 /usr/lib64/libias-audio-common.so

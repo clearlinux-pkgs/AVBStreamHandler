@@ -4,12 +4,12 @@
 #
 Name     : AVBStreamHandler
 Version  : 1.0.3
-Release  : 14
+Release  : 15
 URL      : https://github.com/intel/AVBStreamHandler/releases/download/v1.0.3/AVBStreamHandler-v1.0.3.tar.gz
 Source0  : https://github.com/intel/AVBStreamHandler/releases/download/v1.0.3/AVBStreamHandler-v1.0.3.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : BSD-3-Clause GPL-2.0
+License  : BSD-3-Clause CC-BY-SA-4.0 GPL-2.0
 Requires: AVBStreamHandler-bin = %{version}-%{release}
 Requires: AVBStreamHandler-data = %{version}-%{release}
 Requires: AVBStreamHandler-lib = %{version}-%{release}
@@ -95,15 +95,16 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1544121071
+export SOURCE_DATE_EPOCH=1550781544
 mkdir -p clr-build
 pushd clr-build
+export LDFLAGS="${LDFLAGS} -fno-lto"
 %cmake .. -DIAS_IS_HOST_BUILD=1 -DIAS_DISABLE_DOC=1 -DCMAKE_INSTALL_LIBDIR=lib64
 make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1544121071
+export SOURCE_DATE_EPOCH=1550781544
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/AVBStreamHandler
 cp LICENSE.txt %{buildroot}/usr/share/package-licenses/AVBStreamHandler/LICENSE.txt
@@ -111,6 +112,7 @@ cp deps/audio/common/LICENSE.txt %{buildroot}/usr/share/package-licenses/AVBStre
 cp deps/igb_avb/kmod/COPYING %{buildroot}/usr/share/package-licenses/AVBStreamHandler/deps_igb_avb_kmod_COPYING
 cp deps/igb_avb/kmod/LICENSE %{buildroot}/usr/share/package-licenses/AVBStreamHandler/deps_igb_avb_kmod_LICENSE
 cp deps/igb_avb/lib/LICENSE %{buildroot}/usr/share/package-licenses/AVBStreamHandler/deps_igb_avb_lib_LICENSE
+cp private/samples/LICENSE.txt %{buildroot}/usr/share/package-licenses/AVBStreamHandler/private_samples_LICENSE.txt
 pushd clr-build
 %make_install
 popd
@@ -128,7 +130,7 @@ popd
 
 %files data
 %defattr(-,root,root,-)
-/usr/share/alsa/alsa.conf.d/50-smartx.conf
+%exclude /usr/share/alsa/alsa.conf.d/50-smartx.conf
 
 %files dev
 %defattr(-,root,root,-)
@@ -190,3 +192,4 @@ popd
 /usr/share/package-licenses/AVBStreamHandler/deps_igb_avb_kmod_COPYING
 /usr/share/package-licenses/AVBStreamHandler/deps_igb_avb_kmod_LICENSE
 /usr/share/package-licenses/AVBStreamHandler/deps_igb_avb_lib_LICENSE
+/usr/share/package-licenses/AVBStreamHandler/private_samples_LICENSE.txt
