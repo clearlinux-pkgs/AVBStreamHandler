@@ -1,4 +1,7 @@
+ld-linux-x86-64.so.2
 libasound.so.2
+libboost_serialization.so.1.68.0
+libboost_system.so.1.68.0
 libc.so.6
 libdlt.so.2
 libgcc_s.so.1
