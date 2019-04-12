@@ -4,7 +4,7 @@
 #
 Name     : AVBStreamHandler
 Version  : 1.0.5
-Release  : 17
+Release  : 18
 URL      : https://github.com/intel/AVBStreamHandler/releases/download/v1.0.5/AVBStreamHandler-v1.0.5.tar.gz
 Source0  : https://github.com/intel/AVBStreamHandler/releases/download/v1.0.5/AVBStreamHandler-v1.0.5.tar.gz
 Summary  : No detailed summary available
@@ -29,6 +29,7 @@ BuildRequires : pkgconfig(sndfile)
 BuildRequires : sudo
 BuildRequires : systemd-dev
 BuildRequires : tbb-dev
+BuildRequires : zlib-dev
 
 %description
 INTRODUCTION
@@ -63,6 +64,7 @@ Requires: AVBStreamHandler-lib = %{version}-%{release}
 Requires: AVBStreamHandler-bin = %{version}-%{release}
 Requires: AVBStreamHandler-data = %{version}-%{release}
 Provides: AVBStreamHandler-devel = %{version}-%{release}
+Requires: AVBStreamHandler = %{version}-%{release}
 
 %description dev
 dev components for the AVBStreamHandler package.
@@ -94,7 +96,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1550862407
+export SOURCE_DATE_EPOCH=1555089787
 mkdir -p clr-build
 pushd clr-build
 export LDFLAGS="${LDFLAGS} -fno-lto"
@@ -103,7 +105,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1550862407
+export SOURCE_DATE_EPOCH=1555089787
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/AVBStreamHandler
 cp LICENSE.txt %{buildroot}/usr/share/package-licenses/AVBStreamHandler/LICENSE.txt
