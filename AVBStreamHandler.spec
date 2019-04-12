@@ -4,7 +4,7 @@
 #
 Name     : AVBStreamHandler
 Version  : 1.1.0
-Release  : 20
+Release  : 21
 URL      : https://github.com/intel/AVBStreamHandler/releases/download/v1.1.0/AVBStreamHandler-v1.1.0.tar.gz
 Source0  : https://github.com/intel/AVBStreamHandler/releases/download/v1.1.0/AVBStreamHandler-v1.1.0.tar.gz
 Summary  : No detailed summary available
@@ -96,7 +96,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1555090628
+export SOURCE_DATE_EPOCH=1555091018
 mkdir -p clr-build
 pushd clr-build
 export LDFLAGS="${LDFLAGS} -fno-lto"
@@ -105,7 +105,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1555090628
+export SOURCE_DATE_EPOCH=1555091018
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/AVBStreamHandler
 cp LICENSE.txt %{buildroot}/usr/share/package-licenses/AVBStreamHandler/LICENSE.txt
