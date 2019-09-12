@@ -4,14 +4,13 @@
 #
 Name     : AVBStreamHandler
 Version  : 1.1.0
-Release  : 21
+Release  : 22
 URL      : https://github.com/intel/AVBStreamHandler/releases/download/v1.1.0/AVBStreamHandler-v1.1.0.tar.gz
 Source0  : https://github.com/intel/AVBStreamHandler/releases/download/v1.1.0/AVBStreamHandler-v1.1.0.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause BSL-1.0 CC-BY-SA-4.0 GPL-2.0
 Requires: AVBStreamHandler-bin = %{version}-%{release}
-Requires: AVBStreamHandler-data = %{version}-%{release}
 Requires: AVBStreamHandler-lib = %{version}-%{release}
 Requires: AVBStreamHandler-license = %{version}-%{release}
 BuildRequires : boost-dev
@@ -42,19 +41,10 @@ latencies and sampling events.
 %package bin
 Summary: bin components for the AVBStreamHandler package.
 Group: Binaries
-Requires: AVBStreamHandler-data = %{version}-%{release}
 Requires: AVBStreamHandler-license = %{version}-%{release}
 
 %description bin
 bin components for the AVBStreamHandler package.
-
-
-%package data
-Summary: data components for the AVBStreamHandler package.
-Group: Data
-
-%description data
-data components for the AVBStreamHandler package.
 
 
 %package dev
@@ -62,7 +52,6 @@ Summary: dev components for the AVBStreamHandler package.
 Group: Development
 Requires: AVBStreamHandler-lib = %{version}-%{release}
 Requires: AVBStreamHandler-bin = %{version}-%{release}
-Requires: AVBStreamHandler-data = %{version}-%{release}
 Provides: AVBStreamHandler-devel = %{version}-%{release}
 Requires: AVBStreamHandler = %{version}-%{release}
 
@@ -73,7 +62,6 @@ dev components for the AVBStreamHandler package.
 %package lib
 Summary: lib components for the AVBStreamHandler package.
 Group: Libraries
-Requires: AVBStreamHandler-data = %{version}-%{release}
 Requires: AVBStreamHandler-license = %{version}-%{release}
 
 %description lib
@@ -95,17 +83,21 @@ license components for the AVBStreamHandler package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1555091018
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1568247853
 mkdir -p clr-build
 pushd clr-build
-export LDFLAGS="${LDFLAGS} -fno-lto"
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %cmake .. -DIAS_IS_HOST_BUILD=1 -DIAS_DISABLE_DOC=1 -DCMAKE_INSTALL_LIBDIR=lib64
 make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1555091018
+export SOURCE_DATE_EPOCH=1568247853
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/AVBStreamHandler
 cp LICENSE.txt %{buildroot}/usr/share/package-licenses/AVBStreamHandler/LICENSE.txt
@@ -118,6 +110,11 @@ cp private/samples/LICENSE.txt %{buildroot}/usr/share/package-licenses/AVBStream
 pushd clr-build
 %make_install
 popd
+## Remove excluded files
+rm -f %{buildroot}/usr/share/abi/libias-audio-common.so.4.abi
+rm -f %{buildroot}/usr/share/alsa/alsa.conf.d/50-smartx.conf
+rm -f %{buildroot}/usr/lib64/alsa-lib/libasound_module_pcm_smartx.so
+rm -f %{buildroot}/usr/lib64/alsa-lib/libasound_module_rate_smartx.so
 ## install_append content
 rm %{buildroot}/usr/lib64/libias-audio-common.so
 rm %{buildroot}/usr/lib64/libias-audio-common.so.4
@@ -126,9 +123,6 @@ rm %{buildroot}/usr/lib64/libias-audio-common.so.4.0.0
 
 %files
 %defattr(-,root,root,-)
-%exclude /usr/lib64/ias-audio-common/asound_module_pcm_smartx.cmake
-%exclude /usr/lib64/ias-audio-common/asound_module_rate_smartx.cmake
-%exclude /usr/lib64/ias-audio-common/ias-audio-common.cmake
 
 %files bin
 %defattr(-,root,root,-)
@@ -136,10 +130,6 @@ rm %{buildroot}/usr/lib64/libias-audio-common.so.4.0.0
 /usr/bin/avb_streamhandler_client_app_socket
 /usr/bin/avb_streamhandler_demo
 /usr/bin/daemon_cl
-
-%files data
-%defattr(-,root,root,-)
-%exclude /usr/share/alsa/alsa.conf.d/50-smartx.conf
 
 %files dev
 %defattr(-,root,root,-)
@@ -187,8 +177,6 @@ rm %{buildroot}/usr/lib64/libias-audio-common.so.4.0.0
 
 %files lib
 %defattr(-,root,root,-)
-%exclude /usr/lib64/alsa-lib/libasound_module_pcm_smartx.so
-%exclude /usr/lib64/alsa-lib/libasound_module_rate_smartx.so
 /usr/lib64/libias-media_transport-avb_streamhandler.so.1.1.0
 
 %files license
