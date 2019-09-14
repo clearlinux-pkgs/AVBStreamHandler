@@ -4,7 +4,7 @@
 #
 Name     : AVBStreamHandler
 Version  : 1.1.0
-Release  : 22
+Release  : 23
 URL      : https://github.com/intel/AVBStreamHandler/releases/download/v1.1.0/AVBStreamHandler-v1.1.0.tar.gz
 Source0  : https://github.com/intel/AVBStreamHandler/releases/download/v1.1.0/AVBStreamHandler-v1.1.0.tar.gz
 Summary  : No detailed summary available
